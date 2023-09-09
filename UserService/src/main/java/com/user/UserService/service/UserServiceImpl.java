@@ -21,6 +21,11 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	UserDTO listofdata=new UserDTO();
+	
+	List<UserDTO> users = null;
+
 
 	public UserDTO saveUser(UserDTO userdto) {
 		return userRepository.save(userdto);
@@ -43,34 +48,35 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserDTO> getAllServiceUser() {
-		List<UserDTO> users = null;
+		
 		try {
-			List<UserDTO> usersmulti = userRepository.findAll();
+			List<UserDTO> listOfUser = userRepository.findAll();
 			
-			if (usersmulti != null) {
-				for (UserDTO userDTO : usersmulti) {
+			if (listOfUser != null) {
+				for (UserDTO userDTO : listOfUser) {
+					
 					OrderDTO[] listOfOrder = restTemplate.getForObject(
 							"http://localhost:9093/order/getOrder/" + userDTO.getUserId(), OrderDTO[].class);
 					List<OrderDTO> list = Arrays.stream(listOfOrder).toList();
-				
+					listofdata.setOrders(list);
 
 					for (OrderDTO order : list) {
 						ProductDTO[] product = restTemplate.getForObject(
-								"http://localhost:9093/order/getOrder/" + order.getProductId(), ProductDTO[].class);
+								"http://localhost:9093/order/getOrder/" +order.getProductId(), ProductDTO[].class);
 
 						List<ProductDTO> products = Arrays.stream(product).toList();
-
+						listofdata.setProducts(products);
 					}
 					
 				}
-				
+				users.add(listofdata);
 			}
 		}
 
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return users;
 
 	}
 }

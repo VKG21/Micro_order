@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 public class ProductDTO {
 
 	@Id
+	private long  id;
 	private String productId;
 	
 	private String productName;

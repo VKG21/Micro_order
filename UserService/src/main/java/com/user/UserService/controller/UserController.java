@@ -49,6 +49,6 @@ public class UserController {
 
 	}
 	
-	//user by id//get product //order details
+
 
 }

@@ -38,6 +38,8 @@ public class ProductController {
 	
 	@GetMapping("/get/{productId}")
 	private ResponseEntity<List<ProductDTO>> getProductByOrderId(@PathVariable String productId ){
+		System.out.println("-------------------");
+		System.out.println("--------------------productId"+""+productId);
 		return ResponseEntity.status(HttpStatus.CREATED).body(productService.getProductByOrderId(productId));
 		
 	}
