@@ -1,12 +1,24 @@
 package com.user.UserService.dto;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-
+import jakarta.persistence.Transient;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "user")
 public class UserDTO {
@@ -22,6 +34,11 @@ public class UserDTO {
 	private String city;
 
 	private String userMobNum;
+	@Transient
+	private List<ProductDTO> products;
+	
+	@Transient
+	private List<OrderDTO> orders;
 
 	public long getUserId() {
 		return userId;
@@ -29,6 +46,22 @@ public class UserDTO {
 
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+
+	public List<ProductDTO> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<ProductDTO> products) {
+		this.products = products;
+	}
+
+	public List<OrderDTO> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<OrderDTO> orders) {
+		this.orders = orders;
 	}
 
 	public String getUserName() {

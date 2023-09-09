@@ -35,6 +35,12 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.getAllUser());
 
 	}
+	
+	@GetMapping("/getAllUserByOrderByProduct")
+	public ResponseEntity<List<UserDTO>> getAllUserAndProdcutWithOrder() {
+		return ResponseEntity.status(HttpStatus.CREATED).body(userService.getAllServiceUser());
+
+	}
 
 	@DeleteMapping("/deleteUser/{userId}")
 	public ResponseEntity<ApiResponse> userdelete(@PathVariable long userId) {
