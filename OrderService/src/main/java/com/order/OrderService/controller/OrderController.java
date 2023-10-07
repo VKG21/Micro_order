@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.order.OrderService.controller.service.OrderService;
 import com.order.OrderService.dto.OrderDTO;
+import com.order.OrderService.service.OrderService;
 
 @RestController
 @RequestMapping("/order")

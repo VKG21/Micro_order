@@ -1,4 +1,4 @@
-package com.order.OrderService.controller.service;
+package com.order.OrderService.service;
 
 import java.util.List;
 

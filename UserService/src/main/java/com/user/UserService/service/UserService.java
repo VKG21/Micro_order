@@ -12,6 +12,7 @@ public interface UserService {
 
 	void deleteUser(long userId);
 
-	List<UserDTO> getAllServiceUser();
+
+	UserDTO getAllServiceUser(long userId);
 
 }

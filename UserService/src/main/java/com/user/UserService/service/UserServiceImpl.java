@@ -1,6 +1,7 @@
 package com.user.UserService.service;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RestTemplate restTemplate;
-	
-	UserDTO listofdata=new UserDTO();
-	
-	List<UserDTO> users = null;
 
+	UserDTO listofdata = new UserDTO();
+
+	List<UserDTO> users = null;
 
 	public UserDTO saveUser(UserDTO userdto) {
 		return userRepository.save(userdto);
@@ -47,36 +47,33 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserDTO> getAllServiceUser() {
-		
+	public UserDTO getAllServiceUser(long userId) {
+
+		UserDTO dto = userRepository.findByuserId(userId);
+
 		try {
-			List<UserDTO> listOfUser = userRepository.findAll();
-			
-			if (listOfUser != null) {
-				for (UserDTO userDTO : listOfUser) {
-					
-					OrderDTO[] listOfOrder = restTemplate.getForObject(
-							"http://localhost:9093/order/getOrder/" + userDTO.getUserId(), OrderDTO[].class);
-					List<OrderDTO> list = Arrays.stream(listOfOrder).toList();
-					listofdata.setOrders(list);
+			if ((dto == null)) {
+				throw new ResourceNotFoundException("User", "Id", userId);
+			} else {
+				OrderDTO[] listOfOrder = restTemplate
+						.getForObject("http://localhost:9093/order/getOrder/" + dto.getUserId(), OrderDTO[].class);
+				List<OrderDTO> list = Arrays.stream(listOfOrder).toList();
+				// listofdata.setOrders(list);
+				dto.setOrders(list);
+				for (OrderDTO order : list) {
 
-					for (OrderDTO order : list) {
-						ProductDTO[] product = restTemplate.getForObject(
-								"http://localhost:9093/order/getOrder/" +order.getProductId(), ProductDTO[].class);
+					List<ProductDTO> product = restTemplate.getForObject(
+							"http://localhost:9092/product/get/" + order.getProductId(), List.class);
 
-						List<ProductDTO> products = Arrays.stream(product).toList();
-						listofdata.setProducts(products);
-					}
-					
+					//List<ProductDTO> products = Arrays.stream(product).toList();
+					dto.setProducts(product);
 				}
-				users.add(listofdata);
 			}
-		}
-
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return users;
+
+		return  dto;
 
 	}
 }

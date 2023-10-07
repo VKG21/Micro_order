@@ -36,9 +36,9 @@ public class UserController {
 
 	}
 	
-	@GetMapping("/getAllUserByOrderByProduct")
-	public ResponseEntity<List<UserDTO>> getAllUserAndProdcutWithOrder() {
-		return ResponseEntity.status(HttpStatus.CREATED).body(userService.getAllServiceUser());
+	@GetMapping("/getUserByOrderByProduct/{userId}")
+	public ResponseEntity<UserDTO> getAllUserAndProdcutWithOrder(@PathVariable long userId) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(userService.getAllServiceUser(userId));
 
 	}
 
