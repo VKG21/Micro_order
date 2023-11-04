@@ -56,14 +56,14 @@ public class UserServiceImpl implements UserService {
 				throw new ResourceNotFoundException("User", "Id", userId);
 			} else {
 				OrderDTO[] listOfOrder = restTemplate
-						.getForObject("http://localhost:9093/order/getOrder/" + dto.getUserId(), OrderDTO[].class);
+						.getForObject("http://ORDER-SERVICE/order/getOrder/" + dto.getUserId(), OrderDTO[].class);
 				List<OrderDTO> list = Arrays.stream(listOfOrder).toList();
 				// listofdata.setOrders(list);
 				dto.setOrders(list);
 				for (OrderDTO order : list) {
 
 					List<ProductDTO> product = restTemplate.getForObject(
-							"http://localhost:9092/product/get/" + order.getProductId(), List.class);
+							"http://PRODUCT-SERVICE/product/get/" + order.getProductId(), List.class);
 
 					//List<ProductDTO> products = Arrays.stream(product).toList();
 					dto.setProducts(product);
