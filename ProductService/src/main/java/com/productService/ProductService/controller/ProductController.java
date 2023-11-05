@@ -20,7 +20,7 @@ import com.productService.ProductService.service.ProductService;
 
 @RestController
 @RequestMapping("/product")
-@RefreshScope
+
 public class ProductController {
 
 	@Autowired
