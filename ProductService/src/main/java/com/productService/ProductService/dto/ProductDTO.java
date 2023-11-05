@@ -1,14 +1,18 @@
 package com.productService.ProductService.dto;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name ="Product")
+@Table(name = "Product")
 public class ProductDTO {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private int id;
 	private String productId;
 
 	private String productName;
@@ -54,6 +58,5 @@ public class ProductDTO {
 		return "ProductDTO [productId=" + productId + ", productName=" + productName + ", productCrDate="
 				+ productCrDate + ", productTotal=" + productTotal + "]";
 	}
-
 
 }
